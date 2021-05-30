@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <br>
+    <div class = 'form'>
+    <form action="/search", method="post">
+        <input id="firstname" name="firstname" placeholder="First name Ex. 'Aaron'" type="text">
+        <input id="lastname" name="lastname" placeholder="Last name Ex. 'Judge'" type="text">
+        <input id="search" name="search" type="Submit" disabled>
+    </form>
+    </div>
+    <script>
+        document.querySelector('#firstname').onkeyup = function() {
+            if (document.querySelector('#firstname').value != '' && document.querySelector('#lastname').value != '') {
+                document.querySelector('#search').disabled = false;}
+                else {
+                    document.querySelector('#search').disabled = true;
+                }
+            }
+
+        document.querySelector('#lastname').onkeyup = function() {
+            if (document.querySelector('#firstname').value != '' && document.querySelector('#lastname').value != '') {
+                document.querySelector('#search').disabled = false;}
+            else {
+                document.querySelector('#search').disabled = true;}
+            }
+    </script>
+    <br>
+    <div class = 'form'>
+        <a type="button" class="btn btn-primary" href="/">Home</a>
+        <a class="btn btn-primary" href="/database" role"button">Database of all players</a>
+    </div>
+    <br>
+    <div class="alert alert-success" role="alert">
+        Here are {{ first_name }} {{ last_name }}'s statistics!
+    </div>
+    <br>
+        <table>
+            <tr>
+                <th>Weight lbs.</th>
+                <th>Height ft.</th>
+                <th>Bats</th>
+                <th>Throws</th>
+                <th>Position</th>
+                <th>Birth Year</th>
+            </tr>
+            <tr>
+
+                <td>{{ weight }}</td>
+                <td>{{ height }}</td>
+                <td>{{ bats }}</td>
+                <td>{{ throws }}</td>
+                <td>{{ position }}</td>
+                <td>{{ birthyear }}</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>Team</th>
+                <th>Year</th>
+                <th>Games Played</th>
+                <th>AB</th>
+                <th>R</th>
+                <th>H</th>
+                <th>HR</th>
+                <th>RBI</th>
+                <th>SB</th>
+                <th>BB</th>
+                <th>SO</th>
+                <th>BA</th>
+            </tr>
+            <br>
+            {% for info in hitter %}
+            <tr>
+                <td>{{ info.name }}</td>
+                <td>{{ info.yearID }}</td>
+                <td>{{ info.G }}</td>
+                <td>{{ info.AB }}</td>
+                <td>{{ info.R }}</td>
+                <td>{{ info.H }}</td>
+                <td>{{ info.HR }}</td>
+                <td>{{ info.RBI }}</td>
+                <td>{{ info.SB }}</td>
+                <td>{{ info.BB }}</td>
+                <td>{{ info.SO }}</td>
+                <td>{{ info.average }}</td>
+            </tr>
+            {% endfor %}
+            <th>Totals</th>
+            <th>{{ years }}</td>
+            <th>{{ gamesplayed }}</th>
+            <th>{{ totalab }}</th>
+            <th>{{ totalruns }}</th>
+            <th>{{ totalhits }}</th>
+            <th>{{ totalhr }}</th>
+            <th>{{ totalrbi }}</th>
+            <th>{{ totalsb }}</th>
+            <th>{{ totalbb }}</th>
+            <th>{{ totalso }}</th>
+            <th>{{ totalavg }}</th>
+        </table>
+    <br>
+        <img src="{{ url_for('static', filename='aml.jpg') }}" alt="American league teams" class='am' width='300px'>
+        <img src="{{ url_for('static', filename='nl.jpg') }}" alt="National league teams" class='nat' width='300px'>
+        <br><br><br><br>
+{% endblock %}

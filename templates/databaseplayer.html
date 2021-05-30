@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <br>
+    <div class = 'form'>
+        <a type="button" class="btn btn-primary" href="/">Home</a>
+        <a type="button" class="btn btn-primary" href="/database">Full List</a>
+<br><br>
+    <h3>Search for player's statistics</h3>
+
+        <form action="/search", method="post">
+            <input id="firstname" name="firstname" placeholder="First name Ex. 'Aaron'" type="text">
+            <input id="lastname" name="lastname" placeholder="Last name Ex. 'Judge'" type="text">
+            <input id="search" name="search" type="Submit" disabled>
+        </form>
+    </div>
+    <script>
+        document.querySelector('#firstname').onkeyup = function() {
+            if (document.querySelector('#firstname').value != '' && document.querySelector('#lastname').value != '') {
+                document.querySelector('#search').disabled = false;}
+                else {
+                    document.querySelector('#search').disabled = true;
+                }
+            }
+
+        document.querySelector('#lastname').onkeyup = function() {
+            if (document.querySelector('#firstname').value != '' && document.querySelector('#lastname').value != '') {
+                document.querySelector('#search').disabled = false;}
+            else {
+                document.querySelector('#search').disabled = true;}
+            }
+    </script>
+
+    <br>
+
+    <div class = 'form'>
+
+     <h3>Search by:</h3>
+
+    <form action="/database", method="post">
+        <select id='dropdown' name='dropdown'>
+            <option value='select' selected="selected">Select</option>
+            <option value='nameFirst'>First name</option>
+            <option value='nameLast'>Last name</option>
+            <option value='POS'>Postion '1B' '2B' '3B' 'SS' 'C' 'P' 'OF'</option>
+            <option value='throws'>Throws 'L' or 'R'</option>
+            <option value='bats'>Bats 'L' or 'R'</option>
+            <option value='birthYear'>Birthyear</option>
+        </select>
+            <input id="search" name="search" placeholder='Enter search' type="text">
+<br>
+        <select id='dropdown2' name='dropdown2'>
+            <option value='select' selected="selected">Select</option>
+            <option value='nameFirst'>First name</option>
+            <option value='nameLast'>Last name</option>
+            <option value='POS'>Postion '1B' '2B' '3B' 'SS' 'C' 'P' 'OF'</option>
+            <option value='throws'>Throws 'L' or 'R'</option>
+            <option value='bats'>Bats 'L' or 'R'</option>
+            <option value='birthYear'>Birthyear</option>
+        </select>
+            <input id="search2" name="search2" placeholder='Enter search' type="text">
+<br>
+    <select id='dropdown3' name='dropdown3'>
+            <option value='select' selected="selected">Select</option>
+            <option value='nameFirst'>First name</option>
+            <option value='nameLast'>Last name</option>
+            <option value='POS'>Postion '1B' '2B' '3B' 'SS' 'C' 'P' 'OF'</option>
+            <option value='throws'>Throws 'L' or 'R'</option>
+            <option value='bats'>Bats 'L' or 'R'</option>
+            <option value='birthYear'>Birthyear</option>
+        </select>
+            <input id="search3" name="search3" placeholder='Enter search' type="text">
+<br><br>
+            <input id="submit" name="submit" type="Submit">
+    </form>
+
+
+
+
+
+
+    </div>
+
+    <br>
+
+        <h3>Showing {{ populate }} results!</h3>
+        <table>
+            <tr>
+                <th>Name</td>
+                <th>Birth year</th>
+                <th>Throws</th>
+                <th>Bats</th>
+                <th>Position</th>
+                <th>Team</th>
+            </tr>
+            <br>
+
+            {% for info in player %}
+            <tr>
+                <td>{{ info.nameFirst }} {{ info.nameLast }}</td>
+                <td>{{ info.birthYear }}</td>
+                <td>{{ info.throws }}</td>
+                <td>{{ info.bats }}</td>
+                <td>{{ info.positions }}</td>
+                <td>{{ info.teams }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <img src="{{ url_for('static', filename='aml.jpg') }}" alt="American league teams" class='am' width='300px'>
+        <img src="{{ url_for('static', filename='nl.jpg') }}" alt="National league teams" class='nat' width='300px'>
+        <br><br><br><br>
+{% endblock %}
